@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+
+<html>
+
+  <head>
+    <meta charset="utf-8">
+    <style>
+     body {
+         display: flex;
+         flex-direction: column;
+         padding: 5px;
+         height: 300px;
+     }
+
+     div {
+         display: flex;
+         align-items: baseline;
+     }
+
+     label {
+         padding: 0 10px;
+         width: 600px;
+         align-items: baseline;
+         padding: 5px 0;
+     }
+
+     input {
+         min-width: 150px;
+         min-height: 17px;
+         padding: 5px;
+         border: 2px solid black;
+         border-radius: 7px;
+         text-align: center;
+     }
+
+     .warning {
+         color: red;
+         display: block !important;
+     }
+
+     .note {
+         font-weight: bold;
+         margin-top: 0px;
+     }
+
+     main {
+         display: flex;
+         flex-direction: column;
+     }
+
+     #message {
+         display: none;
+     }
+
+     .header {
+         display: flex;
+         align-items: center;
+     }
+
+     .header img {
+         padding-right: 10px;
+     }
+
+     .settings {
+         border: 2px solid black;
+         padding: 10px;
+         border-radius: 10px;
+         margin-top: 5px;
+     }
+
+     .settings h2 {
+         min-width: 110px;
+     }
+
+     .protocol {
+         flex-wrap: wrap;
+     }
+
+    </style>
+  </head>
+
+  <body>
+    <div class="header">
+        <img src="icons/chhoto-url-48.png"></img>
+        <h1>Chhoto URL Settings</h1>
+    </div>
+
+    <div class="settings">
+        <h2>Instance URL</h2>
+        <label>
+            <input type="text" id="host" placeholder="https://l.example.com">
+            <br>
+            Don't have one? See <a href="https://github.com/sintan1729/chhoto-url">here</a> for more information.
+        </label>
+    </div>
+    <p id="message" class="note">A non-HTTPS connection is insecure! Only use this if you are testing.</p>
+
+    <div class="settings">
+        <h2>API Key</h2>
+        <label>
+            <input type="password" id="key" placeholder="Long API Key">
+            <p>This is the API key that the extension will use to connecr to your Chhoto URL instance. To enable this, set the "api_key" environment variable in the server configuration.</p>
+            <p>See <a href="https://github.com/sintan1729/chhoto-url">here</a> for more information.</p>
+        </label>
+    </div>
+    <p class="note">Important: Chhoto URL will output in the console whether or not your key is secure. If it isn't, it will generate a suggested key and output it. Always follow its advice.</p>
+
+    <div class="settings protocol">
+        <h2>Protocol filters</h2>
+        <label>
+            Allow <code>http://</code> links
+            <input type="checkbox" id="allow-http">
+        </label>
+        <label>
+            Allow <code>https://</code> links
+            <input type="checkbox" id="allow-https">
+        </label>
+        <label>
+            Allow <code>file://</code> links
+            <input type="checkbox" id="allow-file">
+        </label>
+        <label>
+            Allow <code>ftp://</code> links
+            <input type="checkbox" id="allow-ftp">
+        </label>
+    </div>
+    <p class="note">Disabling all filters will allow a link to be created from any URL.</p>
+
+    <script type="application/javascript" src="lib/browser-polyfill.min.js"></script>
+    <script type="application/javascript" src="options.js"></script>
+  </body>
+
+</html>
