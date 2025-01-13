@@ -69,14 +69,14 @@ This extension only communicates to the Chhoto URL server instance you configure
 2. Install the extension (see below for how to install the extension on common browsers)
 
 ### Installing from source on Firefox
-1. Visit [`about:debugging#/runtime/this-firefox`][firefox-extension-page]
+1. Visit `about:debugging#/runtime/this-firefox`
 2. Click "Load Temporary Add-on..."
 3. Navigate to the cloned repository folder
 4. Select the `manifest.json` file
 5. Click "Open"
 
 ### Installing from source on Brave
-1. Visit [`brave://extensions`][brave-extension-page]
+1. Visit `brave://extensions`
 2. Enable "Developer mode" in the top right corner
 3. Click "Load unpacked"
 4. Navigate to the cloned repository folder
@@ -98,6 +98,4 @@ This project was inspired by and modified from Edward Shen's [Shlink extension][
 [clipboard-api]: https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/clipboard
 [storage-api]: https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/storage
 [host-permission]: https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/manifest.json/permissions#host_permissions
-[firefox-extension-page]: about:debugging#/runtime/this-firefox
-[brave-extension-page]: brave://extensions
 [shlink-extension]: https://github.com/edward-shen/shlink
