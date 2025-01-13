@@ -24,6 +24,20 @@ Alternatively, using Docker Run, you can add `-e api_key="SECURE_API_KEY" \` to 
 
 For example, on Linux, you could generate an API key by running `tr -dc A-Za-z0-9 </dev/urandom | head -c 128`
 
+### Ensure `site_url` and `port` are correct
+In order for the Chhoto URL server to properly output the correct shortend URLs, and for this extension to do the same, the `site_url` and `port` environment variables must be properly set.
+
+If your server is not located at `http://localhost`, make sure to set the `site_url` environment variable in the Chhoto URL server configuration. This value cannot be surrounded by quotes.
+
+If your server's port is not `4567`, make sure to set the `port` environment variable in the Chhoto URL server configuration. This value cannot be surrounded by quotes.
+
+Example configuration:
+```yaml
+environment:
+    - site_url=https://chhoto-url.example.com
+    - port=443
+```
+
 ## Installation
 *This extension will be published to extension stores in the near future*
 
