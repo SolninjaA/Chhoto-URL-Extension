@@ -26,7 +26,7 @@ For example, on Linux, you could generate an API key by running `tr -dc A-Za-z0-
 Once you have installed the extension, either through an extension store or [from source][install-from-source], you must configure the extension.
 
 ### Firefox
-1. Right-click on the Chhoto URL extension icon. If the extension is not pinned, the Chhoto URL extension icon will be under this highlighted icon:
+1. Right-click on the Chhoto URL extension icon (![Chhoto URL extension icon](icons/chhoto-url-16.png)). If the extension is not pinned, the Chhoto URL extension icon will be under this highlighted icon:
 
 ![Firefox generic extension icon](https://git.solomon.tech/solomon/Chhoto-URL-Extension/raw/branch/main/generic-extension-icon-firefox.png)
 
@@ -40,7 +40,7 @@ Once you have installed the extension, either through an extension store or [fro
 ![Chromium generic extension icon](https://git.solomon.tech/solomon/Chhoto-URL-Extension/raw/branch/main/generic-extension-icon-chromium.png)
 
 2. **(if the extension is not pinned)** Click on the pin icon next to the Chhoto URL extension icon
-3. Right-click on the Chhoto URL extension icon
+3. Right-click on the Chhoto URL extension icon (![Chhoto URL extension icon](icons/chhoto-url-16.png))
 4. Select "Options"
 5. Configure the settings under `Instance URL`, `API Key`, and `Protocol Filters`
 
@@ -88,7 +88,7 @@ This project was inspired by and modified from Edward Shen's [Shlink extension][
 
 [chhoto-github]: https://github.com/SinTan1729/chhoto-url
 [install-instructions]: https://github.com/SinTan1729/chhoto-url#usage
-[install-from-source]: https://example.com
+[install-from-source]: https://git.solomon.tech/solomon/Chhoto-URL-Extension#installing-from-source
 [tabs-api]: https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/tabs
 [notif-api]: https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/notifications
 [clipboard-api]: https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/clipboard
