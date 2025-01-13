@@ -68,6 +68,7 @@ hostKeyEle.oninput = (event) => {
     // Remove the "warning" class
     messageEle.classList.remove("warning");
   } catch (err) {
+    // If the URL is NOT invalid because of a TypeError
     if (err.name !== "TypeError") {
       messageEle.classList.add("warning");
     // Else, remove warning
