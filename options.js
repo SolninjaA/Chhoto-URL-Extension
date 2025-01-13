@@ -96,7 +96,7 @@ apiKeyEle.oninput = (event) => {
   browserStorage.set({ chhotoKey });
 };
 
-// Allowed protocols - set by the user
+// Allowed protocols
 const allowProtocolsMapping = [
   [AllowHttpEle, "http:"],
   [AllowHttpsEle, "https:"],
@@ -106,31 +106,39 @@ const allowProtocolsMapping = [
 
 for (const [ele, protocol] of allowProtocolsMapping) {
   ele.onclick = () => {
+    // Get allowedProtocols
     browserStorage.get("allowedProtocols").then(({ allowedProtocols }) => {
+      // New set
+      allowedProtocols = new Set(allowedProtocols);
       if (ele.checked) {
         allowedProtocols.add(protocol);
       } else {
         allowedProtocols.delete(protocol);
       }
-      browserStorage.set({ allowedProtocols });
+      // Save to browser storage
+      browserStorage.set({ allowedProtocols: Array(...allowedProtocols) });
     });
   };
 }
 
-function setCurrentChoice({ chhotoHost, chhotoKey, allowedProtocols, chhotoButtonOption, createOptions, modifyOptions }) {
+function setCurrentChoice({ chhotoHost, chhotoKey, allowedProtocols }) {
   hostKeyEle.value = chhotoHost || "";
   apiKeyEle.value = chhotoKey || "";
 
+  // If "allowedProtocols" is undefined, set default protocols
+  // If the user deselects every protocol, this does not activate
+  // since the value would be empty, not undefined.
+  //
+  // In other words, this only gets activated when there is absolutely no data
+  // regarding "allowedProtocols".
+  if (!allowedProtocols) {
+    allowedProtocols = allowProtocolsMapping.flatMap(([_, protocol]) => protocol);
+    browserStorage.set({ allowedProtocols: allowedProtocols });
+  }
+
   // Initialize a list of protocols that are allowed if unset. This needs
   // to be synced with the initialization code in background.js#validateURL.
-  if (allowedProtocols === undefined) {
-    allowedProtocols = new Set();
-    allowedProtocols.add("http:");
-    allowedProtocols.add("https:");
-    allowedProtocols.add("ftp:");
-    allowedProtocols.add("file:");
-    browser.storage.local.set({ allowedProtocols });
-  }
+  allowedProtocols = new Set(allowedProtocols);
 
   AllowHttpEle.checked = allowedProtocols.has("http:");
   AllowHttpsEle.checked = allowedProtocols.has("https:");

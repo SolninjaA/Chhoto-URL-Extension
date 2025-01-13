@@ -84,7 +84,9 @@ function validateURL(url) {
       allowedProtocols.add("https:");
       allowedProtocols.add("ftp:");
       allowedProtocols.add("file:");
-      browser.storage.local.set({ allowedProtocols });
+      browser.storage.local.set({ allowedProtocols: Array(...allowedProtocols) });
+    } else {
+      allowedProtocols = new Set(allowedProtocols);
     }
 
     // If no protocols are set, allow every protocol
@@ -110,12 +112,12 @@ function generateChhotoRequest(url) {
     // If the user didn't specify an API key
     if (!data.chhotoKey) {
       return Promise.reject(new Error(
-        "Missing API Key. Please configure the Chhoto URL extension by navigating to Settings > Extensions & Themes > Chhoto URL > Preferences."
+        "Missing API Key. Please configure the Chhoto URL extension. See https://git.solomon.tech/solomon/Chhoto-URL-Extension for more information."
       ));
     }
     // If the user didn't specify an API key or a host
     if (!data.chhotoKey || !data.chhotoHost) {
-      return Promise.reject(new Error("Please configure the Chhoto URL extension by navigating to Settings > Extensions & Themes > Chhoto URL > Preferences."));
+      return Promise.reject(new Error("Please configure the Chhoto URL extension. See https://git.solomon.tech/solomon/Chhoto-URL-Extension for more information."));
     }
     data.longUrl = url.href;
 
@@ -136,7 +138,7 @@ function requestChhoto(chhotoRequest) {
   headers.append("accept", "application/json");
   headers.append("Content-Type", "application/json");
   // This has been pushed to the main branch of Chhoto URL!
-  headers.append("Chhoto-Api-Key", chhotoRequest.chhotoKey);
+  headers.append("X-API-Key", chhotoRequest.chhotoKey);
 
   // Return output of fetch
   return fetch(new Request(
