@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
   "name": "Chhoto URL",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "An unofficial extension for shortening URLs using the Chhoto URL API. Requires a Chhoto URL instance.",
   "icons": {
     "16": "icons/chhoto-url-16.png",
