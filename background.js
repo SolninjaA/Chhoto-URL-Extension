@@ -77,7 +77,6 @@ function validateURL(url) {
   return browser.storage.local.get("allowedProtocols").then(({ allowedProtocols }) => {
     // Initialize a list of protocols that are allowed if unset.
     // This needs to be synced with the initialization code in options.js.
-    console.log(allowedProtocols);
     if (allowedProtocols === undefined) {
       allowedProtocols = new Set();
       allowedProtocols.add("http:");
@@ -112,12 +111,12 @@ function generateChhotoRequest(url) {
     // If the user didn't specify an API key
     if (!data.chhotoKey) {
       return Promise.reject(new Error(
-        "Missing API Key. Please configure the Chhoto URL extension. See https://git.solomon.tech/solomon/Chhoto-URL-Extension for more information."
+        "Missing API Key. Please configure the Chhoto URL extension. See https://git.solomon.tech/solomon/Chhoto-URL-Extension#installation for more information."
       ));
     }
     // If the user didn't specify an API key or a host
     if (!data.chhotoKey || !data.chhotoHost) {
-      return Promise.reject(new Error("Please configure the Chhoto URL extension. See https://git.solomon.tech/solomon/Chhoto-URL-Extension for more information."));
+      return Promise.reject(new Error("Please configure the Chhoto URL extension. See https://git.solomon.tech/solomon/Chhoto-URL-Extension#installation for more information."));
     }
     data.longUrl = url.href;
 

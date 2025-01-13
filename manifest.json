@@ -16,8 +16,7 @@
     "notifications",
     "clipboardWrite",
     "storage",
-    "https://*/*",
-    "http://*/*"
+    "https://*/*"
   ],
   "options_ui": {
     "page": "options.html"

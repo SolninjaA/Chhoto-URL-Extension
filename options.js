@@ -68,13 +68,8 @@ hostKeyEle.oninput = (event) => {
     // Remove the "warning" class
     messageEle.classList.remove("warning");
   } catch (err) {
-    // If the URL is NOT invalid because of a TypeError
     if (err.name !== "TypeError") {
       messageEle.classList.add("warning");
-
-      // Save the host
-      browserStorage.set({ chhotoHost });
-
     // Else, remove warning
     } else {
       messageEle.classList.remove("warning");
