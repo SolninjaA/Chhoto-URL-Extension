@@ -1,4 +1,8 @@
-# Chhoto URL Extension
+<div align="left">
+    <img align="left" src="icons/chhoto-url-48.png">
+    <h1>Chhoto URL Extension</h1>
+</div>
+
 This extension allows for easy, shortened URL link generation using a [Chhoto URL server][chhoto-github].
 
 ## Requirements
