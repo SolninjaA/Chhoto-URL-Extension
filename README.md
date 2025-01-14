@@ -104,7 +104,7 @@ This project was inspired by and modified from Edward Shen's [Shlink extension][
 4. Optimizing code where possible.
 5. Et cetera
 
-This repository is synced from https://git.solomon.tech/solomon/Chhoto-URL-Extension to https://github.com/SolomonTechnology/Chhoto-URL-Extension every 8 hours. The main repository is https://git.solomon.tech/solomon/Chhoto-URL-Extension.
+This repository is synced from https://git.solomon.tech/solomon/Chhoto-URL-Extension to https://github.com/SolninjaA/Chhoto-URL-Extension every 8 hours. The main repository is https://git.solomon.tech/solomon/Chhoto-URL-Extension.
 
 [chhoto-github]: https://github.com/SinTan1729/chhoto-url
 [install-instructions]: https://github.com/SinTan1729/chhoto-url#usage
