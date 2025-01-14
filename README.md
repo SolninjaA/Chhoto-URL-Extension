@@ -76,7 +76,6 @@ This extension only communicates to the Chhoto URL server instance you configure
 | [`clipboardWrite`][clipboard-api] | Copy the shortened link to your clipboard.                           |
 | [`storage`][storage-api]          | Save the extension settings in your local browser storage.           |
 | [`https://*/*`][host-permission]  | Contact the configured Chhoto URL server instance.                   |
-| [`http://*/*`][host-permission]   | Contact the configured Chhoto URL server instance.                   |
 
 ## Installing from source
 1. Run `git clone https://git.solomon.tech/solomon/Chhoto-URL-Extension.git`
