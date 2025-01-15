@@ -41,7 +41,7 @@ environment:
 ## Installation
 *This extension will be published to extension stores in the near future*
 
-Once you have installed the extension, either through an extension store or [from source][install-from-source], you must configure the extension.
+Once you have installed the extension, either through an extension store or [from source](#installing-from-source), you must configure the extension.
 
 ### Firefox
 1. Right-click on the Chhoto URL extension icon (![Chhoto URL extension icon](icons/chhoto-url-16.png)). If the extension is not pinned, the Chhoto URL extension icon will be under this highlighted icon:
@@ -107,7 +107,6 @@ This repository is synced from https://git.solomon.tech/solomon/Chhoto-URL-Exten
 
 [chhoto-github]: https://github.com/SinTan1729/chhoto-url
 [install-instructions]: https://github.com/SinTan1729/chhoto-url#usage
-[install-from-source]: https://git.solomon.tech/solomon/Chhoto-URL-Extension#installing-from-source
 [tabs-api]: https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/tabs
 [notif-api]: https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/notifications
 [clipboard-api]: https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/clipboard
