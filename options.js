@@ -55,7 +55,7 @@ hostKeyEle.oninput = (event) => {
   }
 
   // Get the Chhoto URL host
-  const chhotoHost = hostKeyEle.value;
+  const chhotoHost = hostKeyEle.value.replace(/\/$/, '');
 
   // Catch the exception from the URL constructor
   // (this always activates because as the user begins typing, the URL is invalid)
