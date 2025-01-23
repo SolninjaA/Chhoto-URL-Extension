@@ -104,9 +104,9 @@ This project was inspired by and modified from Edward Shen's [Shlink extension][
 5. Et cetera
 
 ## Information
-| Syncing from (main repository)                        | Syncing to                                        | Syncing every |
-| ----------------------------------------------------- | ------------------------------------------------- | ------------- |
-| https://git.solomon.tech/solomon/Chhoto-URL-Extension | https://github.com/SolninjaA/Chhoto-URL-Extension | 8 hours       |
+| Syncing from (main repository)                        | Syncing to                                            | Syncing every |
+| ----------------------------------------------------- | ----------------------------------------------------- | ------------- |
+| https://github.com/SolninjaA/Chhoto-URL-Extension     | https://git.solomon.tech/solomon/Chhoto-URL-Extension | 8 hours       |
 
 [chhoto-github]: https://github.com/SinTan1729/chhoto-url
 [install-instructions]: https://github.com/SinTan1729/chhoto-url#usage
