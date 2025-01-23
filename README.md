@@ -71,7 +71,7 @@ This extension only communicates to the Chhoto URL server instance you configure
 ### Extension Permissions
 | Permission                        | Required so that the extension can...                                |
 | --------------------------------- | ---------------------------------------------------------------------|
-| [`tabs`][tabs-api]                | Get the active tab's URL                                             |
+| [`activeTab`][tabs-api]                | Get the active tab's URL                                             |
 | [`notifications`][notif-api]      | Inform users if generating the shortened link was successful or not. |
 | [`clipboardWrite`][clipboard-api] | Copy the shortened link to your clipboard.                           |
 | [`storage`][storage-api]          | Save the extension settings in your local browser storage.           |

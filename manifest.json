@@ -12,7 +12,7 @@
     "256": "icons/chhoto-url-256.png"
   },
   "permissions": [
-    "tabs",
+    "activeTab",
     "notifications",
     "clipboardWrite",
     "storage",
