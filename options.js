@@ -36,6 +36,10 @@ const AllowHttpsEle = document.getElementById("allow-https");
 const AllowFileEle = document.getElementById("allow-file");
 const AllowFtpEle = document.getElementById("allow-ftp");
 const messageEle = document.getElementById("message");
+const generateWithTitleEle = document.getElementById("generate-with-title");
+const titleWordLimitLabelEle = document.getElementById("title-word-limit-label");
+const titleWordLimitEle = document.getElementById("title-word-limit");
+const message2Ele = document.getElementById("message2");
 
 // Get the browser storage
 const browserStorage = browser.storage.local;
@@ -117,11 +121,54 @@ for (const [ele, protocol] of allowProtocolsMapping) {
   };
 }
 
-function setCurrentChoice({ chhotoHost, chhotoKey, allowedProtocols }) {
+/*
+ * URL Generation Options
+ */
+
+// Generate with title
+generateWithTitleEle.onclick = () => {
+  browserStorage.get("generateWithTitle").then(({ generateWithTitle }) => {
+    // Get value
+    generateWithTitle = generateWithTitleEle.checked;
+
+    // Set default display option
+    let display = "none";
+
+    // If generateWithTitle is true
+    if (generateWithTitle) {
+      // Reassign variable
+      display = "block";
+    }
+
+    // Set display and save
+    titleWordLimitLabelEle.style.display = display;
+    browserStorage.set({ generateWithTitle });
+  });
+};
+
+// Title character limit
+titleWordLimitEle.oninput = (event) => {
+  if (event.type === "click") {
+    event.preventDefault();
+  };
+
+  // Get the inputted value
+  const titleWordLimit = titleWordLimitEle.value;
+
+  // If the inputted value is not a number (NaN)
+  if (isNaN(titleWordLimit)) {
+    message2Ele.classList.add("warning");
+  } else {
+    message2Ele.classList.remove("warning");
+    browserStorage.set({ titleWordLimit });
+  };
+}
+
+function setCurrentChoice({ chhotoHost, chhotoKey, allowedProtocols, generateWithTitle, titleWordLimit }) {
   hostKeyEle.value = chhotoHost || "";
   apiKeyEle.value = chhotoKey || "";
 
-  // If "allowedProtocols" is undefined, set default protocols
+  // If "allowedProtocols" doesn't exist, set default protocols
   // If the user deselects every protocol, this does not activate
   // since the value would be empty, not undefined.
   //
@@ -132,6 +179,18 @@ function setCurrentChoice({ chhotoHost, chhotoKey, allowedProtocols }) {
     browserStorage.set({ allowedProtocols: allowedProtocols });
   }
 
+  // If generateWithTitle is undefined, set the default value
+  if (generateWithTitle === undefined) {
+    generateWithTitle = false;
+    browserStorage.set({ generateWithTitle: generateWithTitle });
+  }
+
+  // If titleWordLimit is undefined, set the default value
+  if (titleWordLimit === undefined) {
+    titleWordLimit = "0";
+    browserStorage.set({ titleWordLimit: titleWordLimit });
+  }
+
   // Initialize a list of protocols that are allowed if unset. This needs
   // to be synced with the initialization code in background.js#validateURL.
   allowedProtocols = new Set(allowedProtocols);
@@ -140,6 +199,20 @@ function setCurrentChoice({ chhotoHost, chhotoKey, allowedProtocols }) {
   AllowHttpsEle.checked = allowedProtocols.has("https:");
   AllowFileEle.checked = allowedProtocols.has("file:");
   AllowFtpEle.checked = allowedProtocols.has("ftp:");
+
+  generateWithTitleEle.checked = generateWithTitle;
+
+  // Set default display
+  let display = "none";
+
+  // If generateWithTitle is true, reassign variable
+  if (generateWithTitle === true) {
+    display = "block";
+  }
+
+  // Save
+  titleWordLimitLabelEle.style.display = display;
+  titleWordLimitEle.value = titleWordLimit || "0";
 
 }
 

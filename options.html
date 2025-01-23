@@ -57,7 +57,8 @@
          flex-direction: column;
      }
 
-     #message {
+     #message,
+     #message2 {
          display: none;
      }
 
@@ -134,6 +135,20 @@
         </label>
     </div>
     <p class="note">Disabling all filters will allow a link to be created from any URL.</p>
+
+    <div class="settings checkbox">
+        <h2>URL generation</h2>
+        <label>
+            Create shortened links with the website's title
+            <input type="checkbox" id="generate-with-title">
+        </label>
+        <label id="title-word-limit-label">
+            Short URL word limit
+            <input type="input" id="title-word-limit">
+            <p class="note">Inputting "0" will remove the character limit</p>
+        </label>
+        <p id="message2" class="note">Inputted value is not a number.</p>
+    </div>
 
     <script type="application/javascript" src="lib/browser-polyfill.min.js"></script>
     <script type="application/javascript" src="options.js"></script>

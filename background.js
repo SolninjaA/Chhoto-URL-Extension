@@ -39,6 +39,7 @@
  * @property {string} chhotoHost The location of the Chhoto URL instance.
  * @property {string} chhotoKey The API key to communicate with a Chhoto URL instance with.
  * @property {string} longUrl The requested URL to shorten.
+ * @property {string} title The title of the website
  */
 
 /**
@@ -50,6 +51,7 @@
  * @type {object}
  * @property {number} status
  * @property {{success: boolean, error: boolean, shorturl: string}} json
+ * @property {string} requestedLink The link that tried to be created. This only activates, and is only accurate, if the generateWithTitle option is enabled.
  */
 
 /**
@@ -71,9 +73,10 @@
  * Validates the URL, as in, checks if the protocol is allowed.
  *
  * @param {!URL} url
- * @returns {!URL}
+ * @param {!string} title
+ * @returns {!Promise<[URL, string], Error>}
  */
-function validateURL(url) {
+function validateURL(url, title) {
   return browser.storage.local.get("allowedProtocols").then(({ allowedProtocols }) => {
     // Initialize a list of protocols that are allowed if unset.
     // This needs to be synced with the initialization code in options.js.
@@ -93,20 +96,21 @@ function validateURL(url) {
       return Promise.reject(new Error(`The current page's protocol (${url.protocol}) is unsupported.`));
     }
 
-    // Return URL
-    return Promise.resolve(url);
+    // Return URL and title
+    return Promise.resolve([url, title]);
   });
 }
 
 /**
  * Parses the URL outputted in the previous function, and gets the full link (i.e. URI included).
  *
- * @param {!URL} url
+ * @param {[!URL, string]} url - Holds long URL
+ *                         title - Title of the website
  * @returns {!Promise<ChhotoRequest, Error>}
  * If all the data was obtained, return ChhotoRequest.
  * Else, return an error
  */
-function generateChhotoRequest(url) {
+function generateChhotoRequest([url, title]) {
   return browser.storage.local.get().then((data) => {
     // If the user didn't specify an API key
     if (!data.chhotoKey) {
@@ -114,11 +118,39 @@ function generateChhotoRequest(url) {
         "Missing API Key. Please configure the Chhoto URL extension. See https://git.solomon.tech/solomon/Chhoto-URL-Extension#installation for more information."
       ));
     }
+
     // If the user didn't specify an API key or a host
     if (!data.chhotoKey || !data.chhotoHost) {
       return Promise.reject(new Error("Please configure the Chhoto URL extension. See https://git.solomon.tech/solomon/Chhoto-URL-Extension#installation for more information."));
     }
+
+    // Set URL and title
     data.longUrl = url.href;
+
+    // Make the title an empty string by default
+    // This will create a randomly generated string if sent to the Chhoto URL server
+    data.title = "";
+
+    // If "generateWithTitle" is true
+    if (data.generateWithTitle) {
+      // Get the configured word limit
+      let wordLimit = data.titleWordLimit;
+
+      // Format title name
+      // Replace all occurences of ' - ' to '-'
+      // Replace all occurences of ' ' to '-'
+      // Replace all characters except for 'a-z', '0-9', '-' and '_' with ''
+      let titleName = title.toLowerCase().replace(/ - /g, '-').replace(/\s+/g, '-').replace(/[^a-z0-9-_]/g, '');
+
+      // If the wordLimit is not 0, and thus limited
+      if (wordLimit !== "0") {
+        // Limit the length of the short URL to the configured number
+        titleName = titleName.split('-', wordLimit).join('-');
+      }
+
+      // Set the title
+      data.title = titleName;
+    };
 
     // Return
     return Promise.resolve(data);
@@ -130,7 +162,7 @@ function generateChhotoRequest(url) {
  *
  * @param {!ChhotoRequest} chhotoRequest An object containing all the variables
  * needed to request a shortened link from a Chhoto URL instance.
- * @returns {!ChhotoResponse} The HTTP response from the Chhoto URL instance.
+ * @returns {!Promise<ChhotoResponse, Error>} The HTTP response from the Chhoto URL instance, or an error
  */
 function requestChhoto(chhotoRequest) {
   const headers = new Headers();
@@ -146,20 +178,20 @@ function requestChhoto(chhotoRequest) {
       method: 'POST',
       headers,
       body: JSON.stringify({
-        shortlink: "",
+        shortlink: chhotoRequest.title,
         longlink: chhotoRequest.longUrl,
       }),
     },
-  // Add the HTTP status code to the response
-  )).then(r => r.json().then(data => ({status: r.status, json: data})))
-    // If there was an error
+  // Add the HTTP status code, and requestedLink (see ChhotoResponse in type definitions for details) to the response
+  )).then(r => r.json().then(data => ({ status: r.status, json: data, requestedLink: `${chhotoRequest.chhotoHost}/${chhotoRequest.title}` })))
+    // If there was a HTTP error
+    // This does not activate if the Chhoto server returns a JSON response with an error
     .catch(err => {
       // Change the error message, if there was a NetworkError
       if (err.message === "NetworkError when attempting to fetch resource.") {
         err.message = "Failed to access the Chhoto URL instance. Is the instance online?"
       };
 
-      // Return error
       return Promise.reject(new Error(
         `Error: ${err.message}`
       ));
@@ -180,6 +212,15 @@ function validateChhotoResponse(httpResp) {
   if (httpResp.json.success) {
     return httpResp.json;
   } else {
+    if (httpResp.status === 409) {
+      const json = {
+        success: true,
+        error: false,
+        shorturl: httpResp.requestedLink,
+      }
+      return json;
+    }
+
     return Promise.reject(new Error(
       `Error (${httpResp.status}): ${httpResp.json.reason}.`
     ));
@@ -254,7 +295,7 @@ function notifyError(error) {
 function generateChhoto() {
   browser.tabs
     .query({ active: true, currentWindow: true })
-    .then(tabData => validateURL(new URL(tabData[0].url)))
+    .then(tabData => validateURL(new URL(tabData[0].url), tabData[0].title))
     .then(generateChhotoRequest)
     .then(requestChhoto)
     .then(validateChhotoResponse)
