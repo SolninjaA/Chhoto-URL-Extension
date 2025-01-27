@@ -34,7 +34,7 @@
              cursor: pointer;
          }
 
-         #generate {
+         .generate-button {
              border: black 1px solid;
              border-radius: 7px;
              background-color: white;
@@ -45,7 +45,7 @@
          }
 
          #close:hover,
-         #generate:hover {
+         .generate-button:hover {
              background-color: #bbb;
          }
 
@@ -61,7 +61,7 @@
          }
 
          input {
-             min-width: 150px;
+             min-width: 250px;
              min-height: 17px;
              padding: 5px;
              border: 2px solid black;
@@ -96,26 +96,28 @@
 
         <button id="close" type="button">&#10006; Close</button>
 
-        <div class="generate">
-            <label>
-                Short URL
-                <input required type="text" id="shorturl" placeholder="interesting-short-url">
-                <p id="message"></p>
-            </label>
-        </div>
-        <div class="generate">
-            <label>
-                Long URL
-                <input required type="text" id="longurl" placeholder="https://example.com">
-                <p id="message2">The provided URL is invalid.</p>
-            </label>
-        </div>
-        <div class="generate">
-            <label>
-                <input id="generate" type="button" value="Shorten!">
-                <p id="message3">Error: Required fields are missing.</p>
-            </label>
-        </div>
+        <form id="generate">
+            <div class="generate">
+                <label>
+                    Short URL
+                    <input autofocus required type="text" id="shorturl" placeholder="interesting-short-url">
+                    <p id="message"></p>
+                </label>
+            </div>
+            <div class="generate">
+                <label>
+                    Long URL
+                    <input required type="text" id="longurl" placeholder="https://example.com">
+                    <p id="message2">The provided URL is invalid.</p>
+                </label>
+            </div>
+            <div class="generate">
+                <label>
+                    <input class="generate-button" type="submit" value="Shorten!">
+                    <p id="message3">Error: Required fields are missing.</p>
+                </label>
+            </div>
+        </form>
 
 
         <script type="application/javascript" src="/lib/browser-polyfill.min.js"></script>

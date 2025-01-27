@@ -40,6 +40,7 @@ const generateWithTitleEle = document.getElementById("generate-with-title");
 const titleWordLimitLabelEle = document.getElementById("title-word-limit-label");
 const titleWordLimitEle = document.getElementById("title-word-limit");
 const message2Ele = document.getElementById("message2");
+const autoInsertPopupEle = document.getElementById("auto-insert-popup");
 
 // Get the browser storage
 const browserStorage = browser.storage.local;
@@ -164,7 +165,21 @@ titleWordLimitEle.oninput = (event) => {
   };
 }
 
-function setCurrentChoice({ chhotoHost, chhotoKey, allowedProtocols, generateWithTitle, titleWordLimit }) {
+// Automatically insert long URL into popup
+autoInsertPopupEle.onclick = () => {
+  // Get browser storage
+  browserStorage.get("autoInsertPopup").then(({ autoInsertPopup }) => {
+    // Get value
+    autoInsertPopup = autoInsertPopupEle.checked;
+
+    // Save value
+    browserStorage.set({ autoInsertPopup });
+  });
+};
+
+
+
+function setCurrentChoice({ chhotoHost, chhotoKey, allowedProtocols, generateWithTitle, titleWordLimit, autoInsertPopup }) {
   hostKeyEle.value = chhotoHost || "";
   apiKeyEle.value = chhotoKey || "";
 
@@ -191,16 +206,25 @@ function setCurrentChoice({ chhotoHost, chhotoKey, allowedProtocols, generateWit
     browserStorage.set({ titleWordLimit: titleWordLimit });
   }
 
+  // If autoInsertPopup is undefined, set the default value
+  if (autoInsertPopup === undefined) {
+    autoInsertPopup = false;
+    browserStorage.set({ autoInsertPopup: autoInsertPopup });
+  }
+
   // Initialize a list of protocols that are allowed if unset. This needs
   // to be synced with the initialization code in background.js#validateURL.
   allowedProtocols = new Set(allowedProtocols);
 
+
+  // Update the checkboxes to display the correct value
   AllowHttpEle.checked = allowedProtocols.has("http:");
   AllowHttpsEle.checked = allowedProtocols.has("https:");
   AllowFileEle.checked = allowedProtocols.has("file:");
   AllowFtpEle.checked = allowedProtocols.has("ftp:");
 
   generateWithTitleEle.checked = generateWithTitle;
+  autoInsertPopupEle.checked = autoInsertPopup;
 
   // Set default display
   let display = "none";

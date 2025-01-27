@@ -41,6 +41,56 @@ const generateEle = document.querySelector("#generate");
 let shorturl;
 let longurl;
 
+const requestParams = new URLSearchParams(window.location.search);
+const requestValue = requestParams.get('url');
+
+/**
+ * Automatically insert the long URL, if enabled
+ */
+
+// If a URL was passed in the request
+if (requestValue) {
+  browser.storage.local.get().then(( data ) => {
+    if (data.autoInsertPopup !== undefined && data.autoInsertPopup) {
+      let allowedProtocols;
+      // Initialize a list of protocols that are allowed if unset.
+      if (data.allowedProtocols === undefined) {
+        allowedProtocols = new Set();
+        allowedProtocols.add("http:");
+        allowedProtocols.add("https:");
+        allowedProtocols.add("ftp:");
+        allowedProtocols.add("file:");
+        browser.storage.local.set({ allowedProtocols: Array(...allowedProtocols) });
+      } else {
+        allowedProtocols = data.allowedProtocols;
+        allowedProtocols = new Set(allowedProtocols);
+      }
+
+      // Try and catch structure
+      try {
+        // Define the URL
+        const url = new URL(requestValue);
+
+        // Ensure the URL has a valid protocol
+        if (allowedProtocols.size > 0 && !allowedProtocols.has(url.protocol)) {
+          throw new Error("The URL is invalid");
+        };
+
+        ////// If anything beyond this point is trigerred, the URL protocol is valid. //////
+
+        // Reassign the long url
+        longURLEle.value = url;
+        longurl = url;
+      } catch (error) {
+        console.log(`Error while auto inserting the long URL - ${error}`);
+      };
+
+    };
+
+  });
+};
+
+// Close function
 async function close() {
   try {
     const windowId = (await browser.windows.getCurrent()).id;
@@ -162,7 +212,8 @@ function sendRequest(page) {
 }
 
 // If the generate button was clicked
-generateEle.addEventListener("click", () => {
+generateEle.addEventListener("submit", (event) => {
+  event.preventDefault();
   // Ensure both fields have been filled out, and the long URL is valid
   if ( shorturl !== undefined && longurl !== undefined && !message2Ele.classList.contains("warning") ) {
 

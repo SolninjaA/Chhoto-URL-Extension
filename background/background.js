@@ -345,6 +345,6 @@ browser.contextMenus.create({
 });
 
 // Run code when the context menu is clicked
-browser.contextMenus.onClicked.addListener( () => {
-  browser.windows.create({url: "/popup/popup.html", type: "popup"});
+browser.contextMenus.onClicked.addListener( (info) => {
+  browser.windows.create({url: `/popup/popup.html?url=${info.pageUrl}`, type: "popup"});
 });
