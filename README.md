@@ -39,9 +39,9 @@ environment:
 ```
 
 ## Installation
-*This extension will be published to extension stores in the near future*
+<a href="https://addons.mozilla.org/en-US/firefox/addon/chhoto-url/" target="_blank"><img alt="Firefox icon" src="https://imgur.com/ihXsdDO.png" width="64" height="64"></a>
 
-Once you have installed the extension, either through an extension store or [from source](#installing-from-source), you must configure the extension.
+Once you have installed the extension, either through an extension store (see icons above) or [from source](#installing-from-source), you must configure the extension.
 
 ### Firefox
 1. Right-click on the Chhoto URL extension icon (![Chhoto URL extension icon](icons/chhoto-url-16.png)). If the extension is not pinned, the Chhoto URL extension icon will be under this highlighted icon:
