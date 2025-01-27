@@ -81,10 +81,10 @@ shortURLEle.oninput = (event) => {
       // And if the configured host is not undefined
       if (chhotoHost !== undefined) {
         // Inform the user
-        messageEle.innerHTML = `The short URL will be generated as: ${chhotoHost}/${shortURLText}.`;
+        messageEle.innerText = `The short URL will be generated as: ${chhotoHost}/${shortURLText}.`;
       } else {
         // If the configured host is undefined
-        messageEle.innerHTML = "The Chhoto URL host has not been configured. Cannot generate shortened URL.";
+        messageEle.innerText = "The Chhoto URL host has not been configured. Cannot generate shortened URL.";
       }
 
       // Set the short URL
