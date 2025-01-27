@@ -1,0 +1,124 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <style>
+         body {
+             display: flex;
+             flex-direction: column;
+             padding: 5px;
+             height: 300px;
+             font-size: 20px;
+             font-family: sans-serif;
+         }
+
+         .header {
+             display: flex;
+             align-items: center;
+         }
+
+         .header img {
+             padding-right: 10px;
+         }
+
+         #close {
+             position: absolute;
+             top: 20px;
+             right: 20px;
+             border: black 1px solid;
+             border-radius: 7px;
+             background-color: white;
+             min-height: 30px;
+             min-width: 75px;
+             cursor: pointer;
+         }
+
+         #generate {
+             border: black 1px solid;
+             border-radius: 7px;
+             background-color: white;
+             min-height: 50px;
+             min-width: 200px;
+             cursor: pointer;
+
+         }
+
+         #close:hover,
+         #generate:hover {
+             background-color: #bbb;
+         }
+
+         .generate {
+             display: flex;
+             align-items: baseline;
+         }
+
+         label {
+             padding: 0 10px;
+             align-items: baseline;
+             padding: 5px 0;
+         }
+
+         input {
+             min-width: 150px;
+             min-height: 17px;
+             padding: 5px;
+             border: 2px solid black;
+             border-radius: 7px;
+             text-align: center;
+             font-size: 15px;
+         }
+
+         #message,
+         #message2,
+         #message3 {
+             display: none;
+         }
+
+         .warning {
+             color: red;
+             display: block !important;
+         }
+
+         .shown {
+             display: block !important;
+         }
+
+
+        </style>
+    </head>
+    <body>
+        <div class="header">
+            <img src="/icons/chhoto-url-48.png"></img>
+            <h1>Generate a Chhoto URL</h1>
+        </div>
+
+        <button id="close" type="button">&#10006; Close</button>
+
+        <div class="generate">
+            <label>
+                Short URL
+                <input required type="text" id="shorturl" placeholder="interesting-short-url">
+                <p id="message"></p>
+            </label>
+        </div>
+        <div class="generate">
+            <label>
+                Long URL
+                <input required type="text" id="longurl" placeholder="https://example.com">
+                <p id="message2">The provided URL is invalid.</p>
+            </label>
+        </div>
+        <div class="generate">
+            <label>
+                <input id="generate" type="button" value="Shorten!">
+                <p id="message3">Error: Required fields are missing.</p>
+            </label>
+        </div>
+
+
+        <script type="application/javascript" src="/lib/browser-polyfill.min.js"></script>
+        <script type="application/javascript" src="/popup/popup.js"></script>
+    </body>
+</html>

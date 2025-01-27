@@ -46,7 +46,7 @@ Once you have installed the extension, either through an extension store or [fro
 ### Firefox
 1. Right-click on the Chhoto URL extension icon (![Chhoto URL extension icon](icons/chhoto-url-16.png)). If the extension is not pinned, the Chhoto URL extension icon will be under this highlighted icon:
 
-![Firefox generic extension icon](https://git.solomon.tech/solomon/Chhoto-URL-Extension/raw/branch/main/generic-extension-icon-firefox.png)
+![Firefox generic extension icon](https://raw.githubusercontent.com/SolninjaA/Chhoto-URL-Extension/888138e93ba31bd4eabcb9ea3f261d4381520e9b/generic-extension-icon-firefox.png)
 
 2. Select "Manage Extension"
 3. Select "Preferences"
@@ -55,7 +55,7 @@ Once you have installed the extension, either through an extension store or [fro
 ### Chromium-based browsers
 1. **(if the extension is not pinned)** Click on the icon that is most similar to the highlighted icon in this image:
 
-![Chromium generic extension icon](https://git.solomon.tech/solomon/Chhoto-URL-Extension/raw/branch/main/generic-extension-icon-chromium.png)
+![Chromium generic extension icon](https://raw.githubusercontent.com/SolninjaA/Chhoto-URL-Extension/888138e93ba31bd4eabcb9ea3f261d4381520e9b/generic-extension-icon-chromium.png)
 
 2. **(if the extension is not pinned)** Click on the pin icon next to the Chhoto URL extension icon
 3. Right-click on the Chhoto URL extension icon (![Chhoto URL extension icon](icons/chhoto-url-16.png))
@@ -69,16 +69,17 @@ When the Chhoto URL extension icon is clicked, the current page's URL will be sh
 This extension only communicates to the Chhoto URL server instance you configure. All of the extension's data is stored locally in your local browser storage. The API key is kept in plaintext.
 
 ### Extension Permissions
-| Permission                        | Required so that the extension can...                                |
-| --------------------------------- | ---------------------------------------------------------------------|
-| [`activeTab`][tabs-api]                | Get the active tab's URL                                             |
-| [`notifications`][notif-api]      | Inform users if generating the shortened link was successful or not. |
-| [`clipboardWrite`][clipboard-api] | Copy the shortened link to your clipboard.                           |
-| [`storage`][storage-api]          | Save the extension settings in your local browser storage.           |
-| [`https://*/*`][host-permission]  | Contact the configured Chhoto URL server instance.                   |
+| Permission                        | Required so that the extension can...                                           |
+|-----------------------------------|---------------------------------------------------------------------------------|
+| [`activeTab`][tabs-api]           | Get the active tab's URL                                                        |
+| [`notifications`][notif-api]      | Inform users if generating the shortened link was successful or not.            |
+| [`clipboardWrite`][clipboard-api] | Copy the shortened link to your clipboard.                                      |
+| [`storage`][storage-api]          | Save the extension settings in your local browser storage.                      |
+| [`https://*/*`][host-permission]  | Contact the configured Chhoto URL server instance.                              |
+| [`contextMenus`][context-menus]   | Add an item (which opens a popup for manual URL generation) to the context menu |
 
 ## Installing from source
-1. Run `git clone https://git.solomon.tech/solomon/Chhoto-URL-Extension.git`
+1. Run `git clone https://github.com/SolninjaA/Chhoto-URL-Extension.git`
 2. Install the extension (see below for how to install the extension on common browsers)
 
 ### Installing from source on Firefox
@@ -115,4 +116,5 @@ This project was inspired by and modified from Edward Shen's [Shlink extension][
 [clipboard-api]: https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/clipboard
 [storage-api]: https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/storage
 [host-permission]: https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/manifest.json/permissions#host_permissions
+[context-menus]: https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/menus
 [shlink-extension]: https://github.com/edward-shen/shlink
