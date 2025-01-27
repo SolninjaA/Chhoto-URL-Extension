@@ -100,6 +100,17 @@ This extension only communicates to the Chhoto URL server instance you configure
 4. Navigate to the cloned repository folder
 5. Click "Select"
 
+## Contributors
+
+<!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
+<!-- prettier-ignore-start -->
+<!-- markdownlint-disable -->
+
+<!-- markdownlint-restore -->
+<!-- prettier-ignore-end -->
+
+<!-- ALL-CONTRIBUTORS-LIST:END -->
+
 ## Acknowledgements
 This project was inspired by and modified from Edward Shen's [Shlink extension][shlink-extension]. Modifications include:
 1. Rewriting the backend code to contact a Chhoto URL server, rather than a Shlink server.
