@@ -64,6 +64,7 @@ Once you have installed the extension, either through an extension store or [fro
 
 ## Usage
 When the Chhoto URL extension icon is clicked, the current page's URL will be shortened. The shortened link will be copied to the clipboard.
+
 Alternatively, from v1.2.0 and onwards, you may right-click anywhere on a website or on the extension's icon (![Chhoto URL extension icon](icons/chhoto-url-16.png)), and click "Manually generate a Chhoto URL". This button will open a popup, allowing users to manually generate a shortened URL.
 
 ![Context menu icon](https://raw.githubusercontent.com/SolninjaA/Chhoto-URL-Extension/refs/heads/main/context-menu-button.png)
