@@ -105,6 +105,13 @@ This extension only communicates to the Chhoto URL server instance you configure
 <!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
 <!-- prettier-ignore-start -->
 <!-- markdownlint-disable -->
+<table>
+  <tbody>
+    <tr>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/DarioDarko"><img src="https://avatars.githubusercontent.com/u/154679092?v=4?s=100" width="100px;" alt="DarioDarko"/><br /><sub><b>DarioDarko</b></sub></a><br /><a href="https://github.com/SolninjaA/Chhoto-URL-Extension/commits?author=DarioDarko" title="Code">💻</a></td>
+    </tr>
+  </tbody>
+</table>
 
 <!-- markdownlint-restore -->
 <!-- prettier-ignore-end -->
