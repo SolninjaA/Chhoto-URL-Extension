@@ -8,15 +8,6 @@
   ],
   "contributors": [
     {
-      "login": "DarioDarko",
-      "name": "DarioDarko",
-      "avatar_url": "https://avatars.githubusercontent.com/u/154679092?v=4",
-      "profile": "https://github.com/DarioDarko",
-      "contributions": [
-        "code"
-      ]
-    },
-    {
       "login": "SolninjaA",
       "name": "SolninjaA",
       "avatar_url": "https://avatars.githubusercontent.com/u/51935570?v=4",
@@ -25,6 +16,15 @@
         "code",
         "projectManagement",
         "doc"
+      ]
+    },
+    {
+      "login": "DarioDarko",
+      "name": "DarioDarko",
+      "avatar_url": "https://avatars.githubusercontent.com/u/154679092?v=4",
+      "profile": "https://github.com/DarioDarko",
+      "contributions": [
+        "code"
       ]
     }
   ],
