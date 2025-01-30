@@ -109,6 +109,7 @@ This extension only communicates to the Chhoto URL server instance you configure
   <tbody>
     <tr>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/DarioDarko"><img src="https://avatars.githubusercontent.com/u/154679092?v=4?s=100" width="100px;" alt="DarioDarko"/><br /><sub><b>DarioDarko</b></sub></a><br /><a href="https://github.com/SolninjaA/Chhoto-URL-Extension/commits?author=DarioDarko" title="Code">💻</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/SolninjaA"><img src="https://avatars.githubusercontent.com/u/51935570?v=4?s=100" width="100px;" alt="SolninjaA"/><br /><sub><b>SolninjaA</b></sub></a><br /><a href="https://github.com/SolninjaA/Chhoto-URL-Extension/commits?author=SolninjaA" title="Code">💻</a> <a href="#projectManagement-SolninjaA" title="Project Management">📆</a> <a href="https://github.com/SolninjaA/Chhoto-URL-Extension/commits?author=SolninjaA" title="Documentation">📖</a></td>
     </tr>
   </tbody>
 </table>
