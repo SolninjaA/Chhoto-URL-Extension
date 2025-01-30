@@ -121,10 +121,11 @@ This extension only communicates to the Chhoto URL server instance you configure
 ## Acknowledgements
 This project was inspired by and modified from Edward Shen's [Shlink extension][shlink-extension]. Modifications include:
 1. Rewriting the backend code to contact a Chhoto URL server, rather than a Shlink server.
-2. Changing the appearance of the `options.html` page.
-3. Removing options which were either not possible to implement (because of the Chhoto URL server's limitations), or were not practical.
-4. Optimizing code where possible.
-5. Et cetera
+2. Adding a popup page for manual URL generation.
+3. Changing the appearance of the `options.html` page.
+4. Removing options which were either not possible to implement (because of the Chhoto URL server's limitations), or were not practical.
+5. Optimizing code where possible.
+6. Et cetera.
 
 ## Information
 | Syncing from (main repository)                        | Syncing to                                            | Syncing every |
