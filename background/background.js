@@ -364,6 +364,7 @@ function popupGenerateChhoto(url, title) {
 browser.browserAction.onClicked.addListener(generateChhoto);
 
 // Create a context menu
+browser.contextMenus.removeAll();
 browser.contextMenus.create({
   title: "Manually generate a Chhoto URL",
   contexts: ["all"]
