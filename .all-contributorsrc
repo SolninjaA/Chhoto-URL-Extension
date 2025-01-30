@@ -15,6 +15,17 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "SolninjaA",
+      "name": "SolninjaA",
+      "avatar_url": "https://avatars.githubusercontent.com/u/51935570?v=4",
+      "profile": "https://github.com/SolninjaA",
+      "contributions": [
+        "code",
+        "projectManagement",
+        "doc"
+      ]
     }
   ],
   "commitType": "docs",
