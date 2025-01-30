@@ -51,7 +51,10 @@
  * @type {object}
  * @property {number} status
  * @property {{success: boolean, error: boolean, shorturl: string}} json
- * @property {string} requestedLink The link that tried to be created. This only activates, and is only accurate, if the generateWithTitle option is enabled.
+ * @property {string} host The host of the server.
+ * @property {string} requestedLink The link that tried to be created. This only activates, and is only accurate, if the generateWithTitle option is enabled or the type of the request is "popup"
+ * @property {string} type The type of the request. This can be "background", which means the request came from the background page.
+ *                                                  This can also be "popup", which means the request came from the popup page.
  */
 
 /**
@@ -143,16 +146,20 @@ function generateChhotoRequest([url, title, type]) {
       data.title = "";
     }
 
+    // Set the type of the request
+    data.type = type;
+
     // If "generateWithTitle" is true
     if (data.generateWithTitle) {
       // Get the configured word limit
       let wordLimit = data.titleWordLimit;
 
       // Format title name
+      // Trim all the whitespaces from the beginning and end of the string
       // Replace all occurences of ' - ' to '-'
       // Replace all occurences of ' ' to '-'
       // Replace all characters except for 'a-z', '0-9', '-' and '_' with ''
-      let titleName = title.toLowerCase().replace(/ - /g, '-').replace(/\s+/g, '-').replace(/[^a-z0-9-_]/g, '');
+      let titleName = title.trim().toLowerCase().replace(/ - /g, '-').replace(/\s+/g, '-').replace(/[^a-z0-9-_]/g, '');
 
       // If the wordLimit is not 0, and thus limited
       // If the type of the request does not equal "popup" (the word limit is always unlimited if it's generated from the popup page)
@@ -195,8 +202,8 @@ function requestChhoto(chhotoRequest) {
         longlink: chhotoRequest.longUrl,
       }),
     },
-    // Add the HTTP status code, and requestedLink (see ChhotoResponse in type definitions for details) to the response
-  )).then(r => r.json().then(data => ({ status: r.status, json: data, requestedLink: `${chhotoRequest.chhotoHost}/${chhotoRequest.title}` })))
+    // Add the HTTP status code, type of the request, and requestedLink (see ChhotoResponse in type definitions for details) to the response
+  )).then(r => r.json().then(data => ({ status: r.status, json: data, host: chhotoRequest.chhotoHost, requestedLink: chhotoRequest.title, type: chhotoRequest.type })))
   // If there was a HTTP error
   // This does not activate if the Chhoto server returns a JSON response with an error
     .catch(err => {
@@ -225,11 +232,26 @@ function validateChhotoResponse(httpResp) {
   if (httpResp.json.success) {
     return httpResp.json;
   } else {
+    // If there was a URL conflict
     if (httpResp.status === 409) {
+      // If the type is popup
+      if (httpResp.type === "popup") {
+        // Define the error
+        const error = `Error: The URL "${httpResp.host}/${httpResp.requestedLink}" already exists.`;
+
+        // Send a message to the popup
+        browser.runtime.sendMessage({type: "url-conflict", errorMessage: error, host: httpResp.host, shorturl: httpResp.requestedLink});
+
+        // Return an error
+        return Promise.reject(new Error(
+          error
+        ));
+      };
+
       const json = {
         success: true,
         error: false,
-        shorturl: httpResp.requestedLink,
+        shorturl: `${httpResp.host}/${httpResp.requestedLink}`,
       }
       return json;
     }
@@ -243,11 +265,14 @@ function validateChhotoResponse(httpResp) {
 /**
  * Copies the returned shortened link to the clipboard.
  *
- * @param {!ChhotoJSON} chhotoResp The JSON response from a Chhoto URL instance.
+ * @param {!ChhotoJSON} chhotoResp The JSON response from a Chhoto URL instance. **May also include "type"** if the request came from the popup.js script.
  * @returns {!Promise<ChhotoJSON, Error>} `ChhotoJSON`, unmodified, on
  * success, or an error indicating that we failed to copy to the clipboard.
  */
 function copyLinkToClipboard(chhotoResp) {
+  // Send finished message
+  browser.runtime.sendMessage({message: "finished"});
+
   // Chrome requires this hacky workaround :(
   if (typeof chrome !== "undefined") {
     const prevSelected = document.activeElement;
