@@ -47,6 +47,7 @@ const deleteErrorMessageEle = document.querySelector("#delete-error-message");
 let shorturl;
 let longurl;
 
+// Get the passed long URL, if present
 const requestParams = new URLSearchParams(window.location.search);
 const requestValue = requestParams.get('url');
 
@@ -122,7 +123,7 @@ function deleteLink(host, link) {
     headers.append("X-API-Key", chhotoKey.chhotoKey);
 
     // Fetch
-    const result = fetch(new Request(
+    return fetch(new Request(
       `${host}/api/del/${link}`,
       {
         method: "DELETE",
@@ -178,7 +179,7 @@ function handleMessage(request) {
     // When the user clicks "yes"
     urlConflictYesEle.onclick = () => {
       // Call the deleteLink function
-      deleteLink(request.host, request.shorturl)
+      deleteLink(request.host, request.shorturl);
     };
 
     // When the user clicks "no"
@@ -317,7 +318,6 @@ shortURLEle.oninput = (event) => {
       // Replace all occurences of ' - ' to '-'
       // Replace all occurences of ' ' to '-'
       // Replace all characters except for 'a-z', '0-9', '-' and '_' with ''
-      // let shortURLText = shortURLEle.value.toLowerCase().replace(/ - /g, '-').replace(/(\s+)(?!$)/g, '-').replace(/[^a-z0-9-_]/g, '');
       let shortURLText = shortURLEle.value.trim().toLowerCase().replace(/ - /g, '-').replace(/\s+/g, '-').replace(/[^a-z0-9-_]/g, '');
 
 
