@@ -11,6 +11,7 @@
              height: 300px;
              font-size: 20px;
              font-family: sans-serif;
+             margin-bottom: 20px;
          }
 
          .header {
@@ -34,7 +35,9 @@
              cursor: pointer;
          }
 
-         .generate-button {
+         .generate-button,
+         #url-conflict-yes,
+         #url-conflict-no {
              border: black 1px solid;
              border-radius: 7px;
              background-color: white;
@@ -45,7 +48,9 @@
          }
 
          #close:hover,
-         .generate-button:hover {
+         .generate-button:hover,
+         #url-conflict-yes:hover,
+         #url-conflict-no:hover {
              background-color: #bbb;
          }
 
@@ -72,7 +77,9 @@
 
          #message,
          #message2,
-         #message3 {
+         #message3,
+         #url-conflict,
+         #delete-error {
              display: none;
          }
 
@@ -118,6 +125,19 @@
                 </label>
             </div>
         </form>
+
+        <div id="url-conflict">
+            <h2 id="url-conflict-header"></h2>
+            <h3>Would you like to replace it?</h3>
+            <input id="url-conflict-yes" type="submit" value="Yes">
+            <input id="url-conflict-no" type="submit" value="No (append a random string)">
+            <p>If you replace a link, your browser may still cache the old destination. Others will be able to see the correct destination, if their browser didn't do the same.</p>
+        </div>
+
+        <div id="delete-error">
+            <h2>Error: Failed to replace link</h2>
+            <p id="delete-error-message"></p>
+        </div>
 
 
         <script type="application/javascript" src="/lib/browser-polyfill.min.js"></script>
