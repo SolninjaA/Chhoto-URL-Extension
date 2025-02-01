@@ -52,7 +52,9 @@ const requestParams = new URLSearchParams(window.location.search);
 const requestValue = requestParams.get('url');
 
 // Get the background page, and call the sendRequest function (which is in this script)
-const backgroundFunc = browser.runtime.getBackgroundPage();
+if (typeof chrome === undefined) {
+  const backgroundFunc = browser.runtime.getBackgroundPage();
+};
 
 /**
  * Functions
@@ -136,7 +138,12 @@ function deleteLink(host, link) {
           deleteErrorEle.classList.remove("warning");
 
           // Send request to function which handles requests to the background page
-          backgroundFunc.then(sendRequest, onError);
+          if (typeof chrome !== undefined) {
+            browser.runtime.sendMessage({type: "generate-via-popup", longurl: longurl, shorturl: shorturl});
+          } else {
+            backgroundFunc.then(sendRequest, onError);
+          };
+
         } else if (result.json.error) {
           // Set error message
           deleteErrorMessageEle.innerText = `Error (${result.status}): ${result.json.reason}`;
@@ -224,7 +231,12 @@ generateEle.addEventListener("submit", (event) => {
     message3Ele.classList.remove("warning");
 
     // Send request to function which handles requests to the background page
-    backgroundFunc.then(sendRequest, onError);
+    if (typeof chrome !== undefined) {
+      browser.runtime.sendMessage({type: "generate-via-popup", longurl: longurl, shorturl: shorturl});
+    } else {
+      backgroundFunc.then(sendRequest, onError);
+    };
+
   } else {
     // Add the warning class
     message3Ele.classList.add("warning");

@@ -1,5 +1,5 @@
 {
-  "manifest_version": 2,
+  "manifest_version": 3,
   "name": "Chhoto URL",
   "version": "1.3.1",
   "description": "An unofficial extension for shortening URLs using the Chhoto URL API. Requires a Chhoto URL instance.",
@@ -16,13 +16,16 @@
     "notifications",
     "clipboardWrite",
     "storage",
-    "https://*/*",
-    "contextMenus"
+    "contextMenus",
+    "offscreen"
+  ],
+  "host_permissions": [
+   "https://*/*"
   ],
   "options_ui": {
     "page": "options/options.html"
   },
-  "browser_action": {
+  "action": {
     "default_icon": {
       "16": "icons/chhoto-url-16.png",
       "48": "icons/chhoto-url-48.png",
@@ -34,9 +37,13 @@
     "default_title": "Generate a Chhoto URL!"
   },
   "background": {
-    "scripts": [
-      "lib/browser-polyfill.min.js",
-      "background/background.js"
-    ]
+    "service_worker": "service_worker.js",
+    "type": "module",
+    "scripts": ["lib/browser-polyfill.min.js", "service_worker.js"]
+  },
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "{49edc8ea-f91d-4510-8710-e0e807ad5842}"
+    }
   }
 }

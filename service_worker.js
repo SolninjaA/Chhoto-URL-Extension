@@ -28,6 +28,25 @@
 // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Strict_mode
 "use strict";
 
+// Import polyfill
+import "/lib/browser-polyfill.min.js";
+
+// Create a context menu
+browser.runtime.onInstalled.addListener(() => {
+  browser.contextMenus.create({
+    title: "Manually generate a Chhoto URL",
+    contexts: ["all"],
+    id: "generate-chhoto-url"
+  });
+});
+
+
+// Run code when the context menu is clicked
+browser.contextMenus.onClicked.addListener( (info) => {
+  browser.windows.create({url: `/popup/popup.html?url=${info.pageUrl}`, type: "popup"});
+});
+
+
 /*
  * Type Definitions
  */
@@ -81,6 +100,12 @@
  * @returns {!Promise<[URL, string, string], Error>}
  */
 function validateURL(url, title, type) {
+  // Define a new URL object, in case the url was collected from a runtime message
+  // In which case, the URL object wouldn't be preserved
+  if (type === "popup") {
+    url = new URL(url);
+  }
+
   return browser.storage.local.get("allowedProtocols").then(({ allowedProtocols }) => {
     // Initialize a list of protocols that are allowed if unset.
     // This needs to be synced with the initialization code in options.js.
@@ -269,23 +294,25 @@ function validateChhotoResponse(httpResp) {
  * @returns {!Promise<ChhotoJSON, Error>} `ChhotoJSON`, unmodified, on
  * success, or an error indicating that we failed to copy to the clipboard.
  */
-function copyLinkToClipboard(chhotoResp) {
+async function copyLinkToClipboard(chhotoResp) {
   // Send finished message
   browser.runtime.sendMessage({message: "finished"});
 
   // Chrome requires this hacky workaround :(
-  if (typeof chrome !== "undefined") {
-    const prevSelected = document.activeElement;
-    const tempEle = document.createElement("input");
-    document.body.appendChild(tempEle);
-    tempEle.value = chhotoResp.shorturl;
-    tempEle.select();
-    document.execCommand('copy');
-    document.body.removeChild(tempEle);
-    // Depending on what was previously selected, we might not be able to select the text.
-    if (prevSelected?.select) {
-      prevSelected.select();
-    }
+  // Currently the "getBrowserInfo" function is only available on Firefox browsers
+  // So, we can partially detect the type of the browser
+  // This check may change in the future
+  if (typeof browser.runtime.getBrowserInfo !== "function") {
+    // Create an offscreen document
+    await browser.offscreen.createDocument({
+      url: "/offscreen/offscreen.html",
+      reasons: [chrome.offscreen.Reason.CLIPBOARD],
+      justification: "Copy the shortened URL to the clipboard"
+    });
+
+    // Send a runtime message to the offscreen page
+    browser.runtime.sendMessage({type: "clipboard", link: chhotoResp.shorturl});
+
     return Promise.resolve(chhotoResp);
   } else {
     return navigator.clipboard
@@ -360,17 +387,27 @@ function popupGenerateChhoto(url, title) {
     .catch(notifyError);
 };
 
+/**
+ * Function to handle messages
+ * */
+async function handleMessages(message) {
+  // Only activate if the messge was intended for the background page
+  if (message.type === "generate-via-popup") {
+    if (typeof message.longurl !== 'string' && typeof message.shorturl !== 'string') {
+      throw new TypeError(`The long URL and short URL's type must be a 'string', got "${typeof message.longurl}" and "${typeof message.shorturl} respectively."`)
+    };
+
+    // Generate
+    console.log(message.longurl);
+    popupGenerateChhoto(message.longurl, message.shorturl);
+
+  } else {
+    return;
+  }
+}
+
 // When the extension icon is clicked, call the function above
-browser.browserAction.onClicked.addListener(generateChhoto);
+browser.action.onClicked.addListener(generateChhoto);
 
-// Create a context menu
-browser.contextMenus.removeAll();
-browser.contextMenus.create({
-  title: "Manually generate a Chhoto URL",
-  contexts: ["all"]
-});
-
-// Run code when the context menu is clicked
-browser.contextMenus.onClicked.addListener( (info) => {
-  browser.windows.create({url: `/popup/popup.html?url=${info.pageUrl}`, type: "popup"});
-});
+// When a message is sent
+browser.runtime.onMessage.addListener(handleMessages);
